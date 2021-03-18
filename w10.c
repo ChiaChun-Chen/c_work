@@ -73,3 +73,62 @@ int main() {
 		if()
 	}
 }
+
+//w10
+#include "stdio.h"
+
+int change_from_2_to_10(int m_8) {
+	int temp, sum=0, i, j;
+	for(i=0; m_8>0; i++){
+        temp=m_8%10;
+
+        m_8=m_8/10;
+        for(j=0; j<i; j++){
+            if(temp==0){break;}
+            temp=temp*2;
+            //printf("###############%d\n", temp);
+        }
+        sum=sum+temp;
+        //printf("@@@@@@@@@@@@@%d\n", sum);
+	}
+	return sum;
+}
+
+void change_from_10_to_2(int m, int *num){
+    int i, j;
+    for(i=0; m>0; i++){
+        num[i]=m%2;
+        m=m/2;
+    }
+    for(j=3; j>=0; j--){
+        printf("%d", num[j]);
+    }
+}
+
+int countR(int m){
+    int i=0;
+    for(i=0; m>=0; i++){
+        if(m==0||m==1) return i;
+        else if(m%2==0){
+            //printf("...........%d", m);
+            m=m/2;
+        }
+        else{
+            m=(m+1)/2;
+        }
+    }
+}
+
+int main() {
+	int m_8, m, flag, ans;
+	do{
+        int num[4]={0};
+        scanf("%d", &m_8);
+        scanf("%d", &flag);
+        m=change_from_2_to_10(m_8);
+        ans=countR(m);
+        //printf("%d\n", ans);
+        change_from_10_to_2(ans, &num);
+        printf("\n");
+	}while(flag==0);
+}
