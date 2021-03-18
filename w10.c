@@ -61,3 +61,15 @@ Sample Output:
 0100
 0111
 ==============================================================*/
+int change_from_2_to_10(int m_8) {
+	int result = 0, index = 0;
+	index += m_8 % 2; 
+}
+
+int main() {
+	int m_8, m;
+	scanf("%d", &m_8);
+	for (int i = 0; m > 1; i++) {
+		if()
+	}
+}
