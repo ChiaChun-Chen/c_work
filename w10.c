@@ -1,4 +1,319 @@
-//work 10
+//work 1
+/*==========================================================
+
+//lab202
+
+#include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <errno.h>
+#include <unistd.h>
+#include <fcntl.h>
+
+using namespace std;
+
+
+int gpio_export(unsigned int gpio){
+        int fd , len;
+        char buf[64];
+
+        fd = open("/sys/class/gpio/export", O_WRONLY);
+        if(fd < 0){
+                perror("gpio/export");
+                return fd ;
+        }
+        len = snprintf(buf, sizeof(buf),"%d",gpio);
+        write(fd, buf, len);
+        close(fd);
+        return 0;
+}
+
+int gpio_unexport(unsigned int gpio){
+        int fd , len;
+        char buf[64];
+
+        fd = open("/sys/class/gpio/unexport", O_WRONLY);
+        if(fd < 0){
+                perror("gpio/export");
+                return fd ;
+        }
+        len = snprintf(buf, sizeof(buf),"%d",gpio);
+        write(fd, buf, len);
+        close(fd);
+        return 0;
+}
+
+int gpio_set_dir(unsigned int gpio, string dirStatus){
+        int fd ;
+        char buf[64];
+
+        snprintf(buf, sizeof(buf), "/sys/class/gpio/gpio%d/direction",gpio);
+        fd = open(buf, O_WRONLY);
+        if(fd < 0){
+                perror("gpio/direction");
+                return fd ;
+        }
+        if(dirStatus == "out"){
+                write(fd, "out", 4);
+        }else{
+                write(fd, "in", 3);
+        }
+
+        close(fd);
+        return 0;
+}
+
+int gpio_set_value(unsigned int gpio, int value){
+        int fd ;
+        char buf[64];
+
+        snprintf(buf, sizeof(buf), "/sys/class/gpio/gpio%d/value",gpio);
+        fd = open(buf, O_WRONLY);
+        if(fd < 0){
+                perror("gpio/set-value");
+                return fd ;
+        }
+        if(value == 0){
+                write(fd, "0", 2);
+        }else{
+                write(fd, "1", 2);
+        }
+
+        close(fd);
+        return 0;
+}
+
+int main(){
+        string input_led, input;
+        int n;
+        cin>>n;
+        for(int i=0; i<n*2; i++){
+            if(i%2==0){
+                gpio_set_dir(396, "out");
+                gpio_set_value(396, 1);
+                gpio_set_dir(255, "out");
+                gpio_set_value(255, 1);
+                gpio_set_dir(428, "out");
+                gpio_set_value(428, 0);
+                gpio_set_dir(389, "out");
+                gpio_set_value(389, 0);
+            }
+            else{
+                gpio_set_dir(396, "out");
+                gpio_set_value(396, 0);
+                gpio_set_dir(255, "out");
+                gpio_set_value(255, 0);
+                gpio_set_dir(428, "out");
+                gpio_set_value(428, 1);
+                gpio_set_dir(389, "out");
+                gpio_set_value(389, 1);
+            }
+                sleep(1);
+        }
+        gpio_set_dir(428, "out");
+        gpio_set_value(428, 0);
+        gpio_set_dir(389, "out");
+        gpio_set_value(389, 0);
+return 0;
+}
+        /*cout <<"input led1~led4"<<endl;
+        cin >> input_led;
+        if(input_led == "led1"){
+                gpio_export(396);
+                cout <<"input on or off"<<endl;
+                cin >> input;
+                if(input == "on"){
+                    gpio_set_dir(396, "out");
+                    gpio_set_value(396, 1);
+		    sleep(0.5);
+                }else if(input == "off"){
+                    gpio_set_value(396, 0);
+                    gpio_unexport(396);
+            }
+        }
+
+
+
+        if(input_led == "led2"){
+                gpio_export(255);
+                cin >> input;
+                if(input == "on"){
+                    gpio_set_dir(255, "out");
+                    gpio_set_value(255, 1);
+                }else if(input == "off"){
+                    gpio_set_value(255, 0);
+                    gpio_unexport(255);
+            }
+        }
+
+        if(input_led == "led3"){
+                gpio_export(428);
+                cin >> input;
+                if(input == "on"){
+                    gpio_set_dir(428, "out");
+                    gpio_set_value(428, 1);
+                }else if(input == "off"){
+                    gpio_set_value(428, 0);
+                    gpio_unexport(428);
+            }
+        }
+
+        if(input_led == "led4"){
+                gpio_export(389);
+                cin >> input;
+                if(input == "on"){
+                    gpio_set_dir(389, "out");
+                    gpio_set_value(389, 1);
+                }else if(input == "off"){
+                    gpio_set_value(389, 0);
+                    gpio_unexport(389);
+            }
+        }
+
+        return 0 ;
+}
+==========================================================*/
+/*=========================================================
+
+//lab2
+#include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <errno.h>
+#include <unistd.h>
+#include <fcntl.h>
+
+using namespace std;
+int gpio_export(unsigned int gpio){
+        int fd , len;
+        char buf[64];
+
+        fd = open("/sys/class/gpio/export", O_WRONLY);
+        if(fd < 0){
+                perror("gpio/export");
+                return fd ;
+        }
+        len = snprintf(buf, sizeof(buf),"%d",gpio);
+        write(fd, buf, len);
+        close(fd);
+        return 0;
+}
+
+int gpio_unexport(unsigned int gpio){
+        int fd , len;
+        char buf[64];
+
+        fd = open("/sys/class/gpio/unexport", O_WRONLY);
+        if(fd < 0){
+                perror("gpio/export");
+                return fd ;
+        }
+        len = snprintf(buf, sizeof(buf),"%d",gpio);
+        write(fd, buf, len);
+        close(fd);
+        return 0;
+}
+
+int gpio_set_dir(unsigned int gpio, string dirStatus){
+        int fd ;
+        char buf[64];
+
+        snprintf(buf, sizeof(buf), "/sys/class/gpio/gpio%d/direction",gpio);
+        fd = open(buf, O_WRONLY);
+        if(fd < 0){
+                perror("gpio/direction");
+                return fd ;
+        }
+        if(dirStatus == "out"){
+                write(fd, "out", 4);
+        }else{
+                write(fd, "in", 3);
+        }
+
+        close(fd);
+        return 0;
+}
+
+int gpio_set_value(unsigned int gpio, int value){
+        int fd ;
+        char buf[64];
+
+        snprintf(buf, sizeof(buf), "/sys/class/gpio/gpio%d/value",gpio);
+        fd = open(buf, O_WRONLY);
+        if(fd < 0){
+                perror("gpio/set-value");
+                return fd ;
+        }
+        if(value == 0){
+                write(fd, "0", 2);
+        }else{
+                write(fd, "1", 2);
+        }
+
+        close(fd);
+        return 0;
+}
+
+int main(){
+        string input_led, input;
+        cout <<"input led1~led4"<<endl;
+        cin >> input_led;
+        if(input_led == "led1"){
+                gpio_export(396);
+                cout <<"input on or off"<<endl;
+                cin >> input;
+                if(input == "on"){
+                    gpio_set_dir(396, "out");
+                    gpio_set_value(396, 1);
+                }else if(input == "off"){
+                    gpio_set_value(396, 0);
+                    gpio_unexport(396);
+            }
+        }
+
+        if(input_led == "led2"){
+                gpio_export(255);
+                cin >> input;
+                if(input == "on"){
+                    gpio_set_dir(255, "out");
+                    gpio_set_value(255, 1);
+                }else if(input == "off"){
+                    gpio_set_value(255, 0);
+                    gpio_unexport(255);
+            }
+        }
+
+        if(input_led == "led3"){
+                gpio_export(428);
+                cin >> input;
+                if(input == "on"){
+                    gpio_set_dir(428, "out");
+                    gpio_set_value(428, 1);
+                }else if(input == "off"){
+                    gpio_set_value(428, 0);
+                    gpio_unexport(428);
+            }
+        }
+
+        if(input_led == "led4"){
+                gpio_export(389);
+                cin >> input;
+                if(input == "on"){
+                    gpio_set_dir(389, "out");
+                    gpio_set_value(389, 1);
+                }else if(input == "off"){
+                    gpio_set_value(389, 0);
+                    gpio_unexport(389);
+            }
+        }
+
+        return 0 ;
+}
+==========================================================*/
+
+
 /*==========================================================
 數位電路模擬I
 模擬一個數位IC，內有回饋電路與紀錄器電路
