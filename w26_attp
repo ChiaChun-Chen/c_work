@@ -92,7 +92,7 @@ void f(){
     input(n, data);
     //print(n, data);
 
-    while(count<5){
+    while(count<10){
         id=get_id(n, data);
         if(id>=1){
             data[id].dayt=compute_day(data, data[id]);
